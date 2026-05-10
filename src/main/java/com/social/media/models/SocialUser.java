@@ -19,10 +19,10 @@ public class SocialUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "user_id")
+    @OneToOne(mappedBy = "user_id", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private SocialProfile profile_id;
 
-    @OneToMany(mappedBy = "social_user_id")
+    @OneToMany(mappedBy = "social_user_id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Post> posts = new ArrayList<>();
 
     @ManyToMany
@@ -36,5 +36,11 @@ public class SocialUser {
     @Override
     public int hashCode(){
         return Objects.hash(id);
+    }
+
+
+    public void setProfile_id(SocialProfile profile_id) {
+        this.profile_id = profile_id;
+        this.profile_id.setUser_id(this);
     }
 }

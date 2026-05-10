@@ -24,4 +24,11 @@ public class SocialProfile {
     private SocialUser user_id;
 
     private String description;
+
+    public void setUser_id(SocialUser user_id) {
+        this.user_id = user_id;
+        if(user_id.getProfile_id() != this){
+            user_id.setProfile_id(this);
+        }
+    }
 }
